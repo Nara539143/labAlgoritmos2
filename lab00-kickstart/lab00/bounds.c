@@ -27,13 +27,15 @@ struct bound_data check_bound(int value, int arr[], unsigned int length) {
     res.is_upperbound = true;
     res.is_lowerbound = true;
     res.exists = false;
-    for (unsigned int i=1; i<length; i++) {
+    //printf("DEBUG: acabo de inicializar el struct, los valores son: \n is_upperbound=%d\n is_lowerbound=%d\n exists=%d\n", res.is_upperbound, res.is_lowerbound, res.exists);
+    for (unsigned int i=0; i<length; i++) {
         res.is_upperbound = res.is_upperbound && (value > arr[i]);
         res.is_lowerbound = res.is_lowerbound && (value < arr[i]);
-        if((value=arr[i])){
+        if((value==arr[i])){
             res.exists = true;
             res.where = i;
         }
+        //printf("DEBUG: esta es la vuelta %d del ciclo, los valores son: \n is_upperbound=%d\n is_lowerbound=%d\n exists=%d\n", i, res.is_upperbound, res.is_lowerbound, res.exists);
         
     }
 
@@ -43,17 +45,42 @@ struct bound_data check_bound(int value, int arr[], unsigned int length) {
 int main(void) {
     int a[ARRAY_SIZE] = {0, -1, 9, 4};
     int value=9;
-    //
-    // TODO: COMPLETAR - Pedir entrada al usuario
-    //
+    printf("Se le va a solicitar el ingreso de %d elementos para el arreglo: \n", ARRAY_SIZE);
+    for(unsigned int i = 0; i<ARRAY_SIZE; i++){
+        printf("Ingrese el elemento %d: ", i+1);
+        scanf("%d",&a[i]);
+    }
+    printf("Ingrese un valor para comparar con los elementos del arreglo: ");
+    scanf("%d", &value);
+    //printf("DEBUG: el valor de value es %d\n", value);
+    
     struct bound_data result = check_bound(value, a, ARRAY_SIZE);
 
-    // TODO: REEMPLAZAR LO SIGUIENTE LUEGO POR LA SALIDA QUE PIDE EL ENUNCIADO
-    printf("%d", result.is_upperbound); // Imprime 1
-    printf("%d", result.is_lowerbound); // Imprime 0
-    printf("%u", result.exists);        // Imprime 1
-    printf("%u", result.where);         // Imprime 2
+    //printf("DEBUG: estoy por imprimir los valores, quedaron: \n is_upperbound=%d\n is_lowerbound=%d\n exists=%d\n", result.is_upperbound, result.is_lowerbound, result.exists);
+
+    if(result.is_upperbound){
+        printf("%d es cota superior\n", value);
+    }else{
+        printf("%d no es cota superior\n", value);
+    };
+    if(result.is_lowerbound){
+        printf("%d es cota inferior\n", value);
+    }else{
+        printf("%d no es cota inferior\n", value);
+    };
+    if(result.exists){
+        printf("El valor %d se encuentra en la posicion %d del arreglo\n", value, result.where);
+    }else{
+        printf("%d no se encuentra en el arreglo\n", value);
+    };
 
     return EXIT_SUCCESS;
 }
 
+/*
+Una vez que se obtienen los elementos, se le debe pedir al usuario un valor para 
+verificar con check_bound(). La salida por pantalla debe indicar si el valor que ingresó 
+el usuario es cota superior, cota inferior, mínimo o máximo. Solo en caso de ser mínimo 
+o máximo (esto significa que el valor se encuentra en el arreglo) mostrar por pantalla 
+la posición donde se encontró el elemento
+*/
