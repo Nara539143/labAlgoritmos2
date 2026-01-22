@@ -11,11 +11,32 @@ struct bound_data {
     unsigned int where;
 };
 
+/* que determina si por un lado el valor value es mayor o igual a todos los elementos del 
+arreglo arr (que tiene length elementos), por otro lado si es menor o igual a todos los 
+elementos del arreglo, también indica si value se encuentra en arr y en caso de 
+encontrarse indica en qué posición se lo encontró. Toda esta información es devuelta en
+una estructura struct bound_data que tiene la siguiente definición:
+Los cuatro campos de la estructura son los siguientes: valor de verdad que indica si el 
+valor es mayor o igual a todos los elementos del arreglo (is_upperbound), valor de verdad
+que indica si el valor es menor o igual a todos los elementos (is_lowerbound), valor de 
+verdad que indica si el elemento existe en el arreglo (exists) y posición donde se 
+encontró el elemento (where) */
+
 struct bound_data check_bound(int value, int arr[], unsigned int length) {
     struct bound_data res;
-    //
-    // TODO: COMPLETAR
-    //
+    res.is_upperbound = true;
+    res.is_lowerbound = true;
+    res.exists = false;
+    for (unsigned int i=1; i<length; i++) {
+        res.is_upperbound = res.is_upperbound && (value > arr[i]);
+        res.is_lowerbound = res.is_lowerbound && (value < arr[i]);
+        if((value=arr[i])){
+            res.exists = true;
+            res.where = i;
+        }
+        
+    }
+
     return res;
 }
 
