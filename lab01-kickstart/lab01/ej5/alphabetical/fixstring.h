@@ -39,6 +39,9 @@ void fstring_swap(fixstring s1,  fixstring s2);
  *
  */
 
+bool fstring_less(fixstring s1, fixstring s2);
+//indica si s1<s2 alfabeticamente
+
 
 
 

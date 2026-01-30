@@ -46,27 +46,35 @@ char *parse_filepath(int argc, char *argv[]) {
 int main(int argc, char *argv[]) {
     char *filepath = NULL;
 
+    printf("LINEA 49 main.c\n");
     /* parse the filepath given in command line arguments */
     filepath = parse_filepath(argc, argv);
 
+    printf("LINEA 53 main.c\n");
     /* create an array of MAX_SIZE elements */
     fixstring array[MAX_SIZE];
 
+    printf("LINEA 57 main.c\n");
     /* parse the file to fill the array and obtain the actual length */
     unsigned int length = array_from_file(array, MAX_SIZE, filepath);
 
+    printf("LINEA 61 main.c\n");
     /* create a copy of the array, to do some checks later */
     fixstring copy[MAX_SIZE];
     array_copy(copy, array, length);
 
+    printf("LINEA 66 main.c\n");
     quick_sort(array, length);
 
+    printf("LINEA 69 main.c\n");
     /* show the ordered array in the screen */
     array_dump(array, length);
 
+    printf("LINEA 73 main.c\n");
     /* check if it is sorted */
     assert(array_is_sorted(array, length));
 
+    printf("LINEA 77 main.c\n");
     /* check if it is a permutation of original */
     assert(array_is_permutation_of(copy, array, length));
     return EXIT_SUCCESS;
