@@ -1,5 +1,6 @@
 #ifndef _CIMA_H
 #define _CIMA_H
+#define N 5 //tam arreglo
 
 #include <stdbool.h>
 
@@ -28,5 +29,7 @@ bool tiene_cima(int a[], int length);
  * @param length Largo del arreglo.
  */
 int cima(int a[], int length);
+
+void printf_array (int a[N], int length);
 
 #endif

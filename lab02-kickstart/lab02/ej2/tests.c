@@ -3,8 +3,8 @@
 #include "cima.h"
 
 #define MAX_LENGTH 10
-#define N_TESTCASES_TIENE_CIMA 1
-#define N_TESTCASES_CIMA 1
+#define N_TESTCASES_TIENE_CIMA 10
+#define N_TESTCASES_CIMA 10
 
 void test_tiene_cima(void);
 void test_cima(void);
@@ -23,11 +23,18 @@ void test_tiene_cima(void) {
         bool result;
     };
 
+    //es una lista de structs
     struct testcase tests[N_TESTCASES_TIENE_CIMA] = {
-      { {8}, 1, true },
-
-        // COMPLETAR!!
-
+        { {8}, 1, true },
+        { {8, 9}, 2, true },
+        { {8, 6}, 2, true },
+        { {8, 9, 10, 20}, 4, true },
+        { {8, 7, 6, 5}, 4, true },
+        { {8, 7, 5, 7}, 4, false },
+        { {8, 7, 6, 10}, 4, false },
+        { {8, 7, 6, 5, 4, 3, 2, 10}, 8, false },
+        { {8, 9, 10, 1}, 4, true },
+        { {1, 1, 1, 1}, 4, true },
     };
     bool result;
 
@@ -54,9 +61,16 @@ void test_cima(void) {
     };
 
     struct testcase tests[N_TESTCASES_CIMA] = {
-        { {8}, 1, 0 },
-
-        // COMPLETAR!!
+        { {8}, 1, 8 },
+        { {8, 9}, 2, 9 },
+        { {8, 6}, 2, 8 },
+        { {8, 9, 10, 20}, 4, 20 },
+        { {8, 7, 6, 5}, 4, 8 },
+        { {5, 8, 7, 5}, 4, 8 },
+        { {8, 20, 11, 10}, 4, 20 },
+        { {1, 8, 7, 6, 5, 4, 3, 2}, 8, 8 },
+        { {8, 9, 10, 1}, 4, 10 },
+        { {1, 1, 1, 1}, 4, 1 },
 
     };
     int result;
