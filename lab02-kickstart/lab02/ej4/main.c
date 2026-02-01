@@ -79,3 +79,4 @@ double medir_cima_log(int a[], int length) {
 
     return cpu_time_used;
 }
+
