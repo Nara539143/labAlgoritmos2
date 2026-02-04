@@ -33,7 +33,7 @@ cosas que tengo que hacer:
 */
 
 Weather weather_from_file(FILE* file){ //un puntero a una variable de tipo FILE llamado file (es el contenido de un archivo)
-    Weather weather;
+    WeatherTable weather;
     if(file == NULL){ //manejo de errores, aunque podria ponerlo como PRE tambien
       fprintf(stderr, "El archivo no es valido"); //imprimo por la salida de errores mensaje de error
       exit(EXIT_FAILURE); //aborto el programa
@@ -41,38 +41,28 @@ Weather weather_from_file(FILE* file){ //un puntero a una variable de tipo FILE 
     int año, mes, dia, t_media, t_maxima, t_minima, res;
     unsigned int presion, humedad, precipitaciones;
 
-    while(fscanf(file, "%d" " %d" " %d" " %d" " %d" " %d" " %u" " %u" " %u", &año, &mes, &dia, &t_media, &t_maxima, &t_minima, &presion, &humedad, &precipitaciones) == 9){
-      if((año > YEARS) || (mes > MONTHS) || (dia > DAYS)){
-        fprintf(stderr, "Error: acceso fuera del arreglo\n");
-        exit(EXIT_FAILURE);
-      }else{
-        (weather[año][mes][dia])._average_temp = t_media;
-        (weather[año][mes][dia])._max_temp = t_maxima;
-        (weather[año][mes][dia])._min_temp = t_minima;
-        (weather[año][mes][dia])._pressure = presion;
-        (weather[año][mes][dia])._moisture = humedad;
-        (weather[año][mes][dia])._rainfall = precipitaciones;
 
+    while(!feof(file)){   //se fija si llego al final de archivo, pero uno atrazado
+      res = fscanf(file, "%d" " %d" " %d" " %d" " %d" " %d" " %u" " %u" " %u", &año, &mes, &dia, &t_media, &t_maxima, &t_minima, &presion, &humedad, &precipitaciones);
+      if(res != EOF){
+        if((año > YEARS) || (mes > MONTHS) || (dia > DAYS)){
+          fprintf(stderr, "Error: acceso fuera del arreglo\n");
+          exit(EXIT_FAILURE);
+        }else if (res != 9){
+          fprintf(stderr, "Error: linea incorrecta\n");
+          exit(EXIT_FAILURE);
+        }else{
+          (weather[año][mes][dia])._average_temp = t_media;
+          (weather[año][mes][dia])._max_temp = t_maxima;
+          (weather[año][mes][dia])._min_temp = t_minima;
+          (weather[año][mes][dia])._pressure = presion;
+          (weather[año][mes][dia])._moisture = humedad;
+          (weather[año][mes][dia])._rainfall = precipitaciones;
+        }
+
+      }
     }
-    
-    /*
-    MANEJOS DE ERRORES QUE ME FALTAN
-    la linea una es correcta, la linea dos es correcta, pero la tres es incorrecta, y de ahi en mas siguen correctos
-    en ves de guardar hasta la linea dos y ya deberia imprimir un mensaje de error
-    idea que se me ocurre: antes de hacer el while contar las lineas, e iterar por cada line for(i=0, i<lineas, i++){fopen ... }
-    de esta forma puedo imprimir mensajes de error especificos si una linea es incorrecta. contras: aumenta la complejidad del programa, ya que debo recorrer
-    el archivo dos veces, una para contar lineas y una para cargar valores
-    
-    otro error, el tamaño del arreglo no alcanza para guardar todos los datos
-    se soluciona agregando una condicion al while de que la posicion del arreglo debe ser menor al tamaño del arreglo. pero ahi lo que haria seria simplemente cargar una
-    menor cantidad de elementos, y a mi me gustaria imprimir un mensaje de error especifico
-    otra opcion: agregar un if adentro del while, es codigo un poco mas sucio pero me permite imprimir mensajes de error especificos
-    otra opcion, igual que arriba, contar las lineas antes de entrar al while
-    
-    */
-
-    
-
+    fclose(file); //no se si esto va en esta funcion o es reponsabilidad del usuario
     return weather;
 }
 
