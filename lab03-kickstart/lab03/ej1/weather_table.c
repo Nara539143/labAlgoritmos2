@@ -64,12 +64,18 @@ void table_from_file(WeatherTable a, const char *filepath) {
             exit(EXIT_FAILURE);
         }
 
-        // Ir a la función 'weather_from_file' en weather.c y completar!
         Weather weather = weather_from_file(file);
 
-        // También completar acá:
-        // Guardar la medición de clima en el arreglo multidimensional.
+
+        a[(k_year-FST_YEAR)][(k_month-1)][(k_day-1)]=weather;
     }
 
     fclose(file);
 }
+
+
+/* falla en esta linea: 1980 1 3 247 320 160 10058 51 0
+
+año 1980 = posicion 1980-1980 = 0, esto anda
+dia = 1
+mes = 3 */

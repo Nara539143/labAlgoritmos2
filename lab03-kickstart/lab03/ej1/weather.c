@@ -33,36 +33,19 @@ cosas que tengo que hacer:
 */
 
 Weather weather_from_file(FILE* file){ //un puntero a una variable de tipo FILE llamado file (es el contenido de un archivo)
-    WeatherTable weather;
+    Weather weather;
     if(file == NULL){ //manejo de errores, aunque podria ponerlo como PRE tambien
       fprintf(stderr, "El archivo no es valido"); //imprimo por la salida de errores mensaje de error
       exit(EXIT_FAILURE); //aborto el programa
     }
-    int año, mes, dia, t_media, t_maxima, t_minima, res;
-    unsigned int presion, humedad, precipitaciones;
+    int res;
+    res = fscanf(file, " %d %d %d %u %u %u ", &weather._average_temp, &weather._max_temp, &weather._min_temp, &weather._pressure, &weather._moisture, &weather._rainfall);
 
-
-    while(!feof(file)){   //se fija si llego al final de archivo, pero uno atrazado
-      res = fscanf(file, "%d" " %d" " %d" " %d" " %d" " %d" " %u" " %u" " %u", &año, &mes, &dia, &t_media, &t_maxima, &t_minima, &presion, &humedad, &precipitaciones);
-      if(res != EOF){
-        if((año > YEARS) || (mes > MONTHS) || (dia > DAYS)){
-          fprintf(stderr, "Error: acceso fuera del arreglo\n");
-          exit(EXIT_FAILURE);
-        }else if (res != 9){
-          fprintf(stderr, "Error: linea incorrecta\n");
-          exit(EXIT_FAILURE);
-        }else{
-          (weather[año][mes][dia])._average_temp = t_media;
-          (weather[año][mes][dia])._max_temp = t_maxima;
-          (weather[año][mes][dia])._min_temp = t_minima;
-          (weather[año][mes][dia])._pressure = presion;
-          (weather[año][mes][dia])._moisture = humedad;
-          (weather[año][mes][dia])._rainfall = precipitaciones;
-        }
-
-      }
+    if(res != 6){
+      fprintf(stderr, "Error: linea invalida\n");
+      exit(EXIT_FAILURE);
     }
-    fclose(file); //no se si esto va en esta funcion o es reponsabilidad del usuario
+
     return weather;
 }
 

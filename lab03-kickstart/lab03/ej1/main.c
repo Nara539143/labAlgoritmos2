@@ -10,7 +10,7 @@
 
 /* Then, this project's includes, alphabetically ordered */
 #include "weather_table.h"
-
+#include "weather_utils.h"
 /**
  * @brief print usage help
  * @param[in] program_name Executable name
@@ -49,6 +49,15 @@ char *parse_filepath(int argc, char *argv[]) {
     return (result);
 }
 
+//IMPRIMIR VALORES DE UN ARREGLO
+void printf_array(int a[], int length){
+    printf("[");
+    for (int i=0; i<(length-1); i++){
+        printf("%d ",  a[i]);
+    }
+    printf("%d]\n", a[length-1]);
+}
+
 /**
  * @brief Main program function
  *
@@ -57,6 +66,7 @@ char *parse_filepath(int argc, char *argv[]) {
  *
  * @return EXIT_SUCCESS when programs executes correctly, EXIT_FAILURE otherwise
  */
+
 int main(int argc, char *argv[]) {
     char *filepath = NULL;
 
@@ -64,13 +74,46 @@ int main(int argc, char *argv[]) {
     filepath = parse_filepath(argc, argv);
 
     /* create a table variable */
-    WeatherTable table;
+    WeatherTable table; //es un arreglo [años][meses][dias]
 
     /* parse the file to fill the table */
     table_from_file(table, filepath);
 
     /* show the table in the screen */
-    table_dump(table);
+    //table_dump(table);
+
+    //llamar a temperatura minima historica
+    printf("La temperatura minima historica es: %d\n", temperatura_minima_historica (table));
+
+    //mostrar la maxima temperatura maxima de cada año
+    int mtm_year[YEARS];
+    max_temp_max_from_each_year (table, mtm_year);
+    printf("Para cada año entre 1980 y 2016 las mayores temperaturas máximas registradas durante ese año fueron: \n");
+    printf_array(mtm_year, YEARS);
+    
+    //imprimir arreglo con la maxima precipitacion
+    int month_max_rainfall[YEARS];
+    array_max_rainfall (table, month_max_rainfall);
+    printf("La maxima precipitacion mensual fue: \n");
+    printf_array(month_max_rainfall, YEARS);
 
     return EXIT_SUCCESS;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
