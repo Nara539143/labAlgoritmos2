@@ -22,6 +22,19 @@ int main(void) {
     person_t m = {90, 'M'};
     int a[] = {0, 1, 2, 3};
 
+    int* p = &x;
+    *p = 9;
+
+    person_t* q = &m;
+    q->age = 100;
+    q->name_initial = 'F';
+
+    p = &a[1];
+    *p = 42;
+
+    p=NULL;
+    q=NULL; 
+
     /* Completar aquí:
        Al finalizar la ejecución las variables deben tener los siguientes valores
        x = 9
