@@ -6,10 +6,20 @@
 #define MAX_LENGTH 1820
 
 char *string_clone(const char *str, size_t length) {
-    char clon[MAX_LENGTH];
-    char *output=clon;
+    //no entiendo
+    //char *output=clon; 
+    /*aca declaro un puntero, con * le asigno a la memoria señalada por el puntero el contenido 
+    de clon, seria que output apunta a clon si hago output = &clon, pero no estoy haciendo eso, estoy haciendo
+    *output = clon, es decir, a la memoria apuntada por output le estoy asignando el contenido de clon.
+    el unico problema que puedo identificar aca es que la memoria apuntada por output no esta reservada, pero no
+    veo nada mas. MENSA, el * ese no es el operador de refernciacion, es el operador de declaracion, eso es 
+    simplemente output = clon */
+    //corrijo
+    char *output = malloc(sizeof(char)*(length + 1));
+
+
     for (size_t i=0; i<length;i++) {
-        output[i] = str[i];
+        output[i] = str[i]; 
     }
     output[length] = '\0';
     return output;
@@ -56,6 +66,9 @@ int main(void) {
          "                Jedi....\n" ANSI_WHITE;
     char *copy=NULL;
 
+    //Aca no entiendo, la original es un arreglo, no un puntero, pero se la estoy pasando a la funcion clon
+    //cuya firma pide un string y no se esta quejando
+    //RESPUESTA: se castea automaticamente a puntero, puntero al stack
     copy = string_clone(original, sizeof(original)/sizeof(*original));
     printf("Original:\n" ANSI_CYAN
             " %s\n", original);
@@ -67,6 +80,8 @@ int main(void) {
     copy[5] = 'g';
     printf("Copia   :\n" ANSI_CYAN
            " %s\n", copy);
+    free(copy);
+    copy = NULL; 
 
     return EXIT_SUCCESS;
 }
