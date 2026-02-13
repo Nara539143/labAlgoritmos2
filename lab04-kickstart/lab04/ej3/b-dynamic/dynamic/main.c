@@ -59,6 +59,10 @@ int main(int argc, char *argv[]) {
     // COMPLETAR: Liberar la memoria usada por <array>
     //
 
+    //mi duda, yo aca haria simplemente free(array), pero eso libera el arreglo entero o solo el primer elemento?
+    //respuesta: cada free liberlo exactamente lo que se reservo con malloc, aca como con malloc reserve todo completo
+    // se libera todo completo
+    free(array);
     return EXIT_SUCCESS;
 }
 
