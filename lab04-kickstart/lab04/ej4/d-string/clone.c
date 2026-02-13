@@ -5,13 +5,20 @@
 
 #define MAX_LENGTH 1820
 
+//no entiendo, que diferencia hay con la funcion anterior?: har *string_clone(const char *str, size_t length)
+//ya vi, me falta el parametro length, podre entonces fabricarlo y despues copiar y pegar codigo? veamos:
+
+
 char *string_clone(const char *str) {
-    char *clone=NULL;
-    /*
-     * COMPLETAR
-     *
-     */
-    return output;
+    size_t length = strlen(str);
+    char *clone=malloc(sizeof(char)*(length + 1));
+
+    for (size_t i=0; i<length;i++) {
+        clone[i] = str[i]; 
+    }
+    clone[length] = '\0';
+
+    return clone;
 }
 
 
