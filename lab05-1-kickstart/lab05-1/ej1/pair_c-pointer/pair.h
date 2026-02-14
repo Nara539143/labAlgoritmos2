@@ -1,7 +1,7 @@
 #ifndef _PAIR_H
 #define _PAIR_H
 
-typedef struct s_pair_t * pair_t;
+typedef struct s_pair_t * pair_t; //pair_t es un puntero a un struct
 
 struct s_pair_t {
     int fst;
