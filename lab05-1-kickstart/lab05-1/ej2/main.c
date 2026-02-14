@@ -52,7 +52,9 @@ bool matching_parentheses(FILE * file) {
             counter_dec(c);
         }
     }
-    return (balanced && counter_is_init(c));
+    bool aux = counter_is_init(c);
+    counter_destroy(c);
+    return (balanced && aux);
 }
 
 int main(int argc, char *argv[]) {
