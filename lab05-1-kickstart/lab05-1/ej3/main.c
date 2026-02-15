@@ -31,41 +31,66 @@ char *parse_filepath(int argc, char *argv[]) {
     return (result);
 }
 
-
+//Calcula el promedio
 float average(list l) {
-/*
-    Needs implementation.
-*/
+    //printf("l36\n");
+    list aux = copy_list(l);
+    //printf("l38\n");
+    int sum = 0;
+    //printf("l40\n");
+    for(int i = 0; i< length(l); i++){
+        //printf("l42 - for %d\n", i);
+        sum = sum + index(aux, i);
+        //printf("l44 - for %d\n", i);
+    }
+    //printf("l46\n");
+    destroy(aux);
+    //printf("l48\n");
+    float res = sum/length(l);
+    //printf("l50\n");
+    return res;
 }
 
 list array_to_list(int array[], unsigned int length) {
-    /* Initialize the list */
+    list l = empty();
     for (unsigned int i = 0u; i < length; ++i) {
-        /* Add element to the list  */
+        l=addr(l, array[i]);
     }
-    /* Return list */
+    return l;
 }
 
 int main(int argc, char *argv[]) {
     char *filepath = NULL;
 
+    printf("parse the filepath given in command line arguments\n");
     /* parse the filepath given in command line arguments */
     filepath = parse_filepath(argc, argv);
 
+    printf("create an array of MAX_SIZE elements\n");
     /* create an array of MAX_SIZE elements */
     int array[MAX_SIZE];
 
+    printf("parse the file to fill the array and obtain the actual length\n");
     /* parse the file to fill the array and obtain the actual length */
-    unsigned int length = array_from_file(array, MAX_SIZE, filepath);
+    unsigned int length_v = array_from_file(array, MAX_SIZE, filepath);
+    printf("length_v = %d\n", length_v);
 
+    printf("show the array in the screen\n");
     /* show the array in the screen */
-    array_dump(array, length);
+    array_dump(array, length_v);
 
+    printf("transform from array to our list type\n");
     /* transform from array to our list type */
-    list l = array_to_list(array, length);
+    list l = array_to_list(array, length_v);
 
+    //CONTROL, IMPRIMO LOS DATOS DE LA LISTA
+    printf("length = %d\n", length(l));
+
+    printf("call the average function\n");
     /* call the average function */
     printf("The average is: %.2f \n", average(l));
+
+    destroy(l);
 
     return (EXIT_SUCCESS);
 }
